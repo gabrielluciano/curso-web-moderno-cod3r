@@ -1,0 +1,38 @@
+No arquivo package.json primeiro mudamos o arquivo principal que é o main
+de index.js para funcionarios.js que é o nosso arquivo principal
+
+    {
+        "name": "funcionarios",
+        "version": "1.0.0",
+        "description": "",
+        "main": "funcionarios.js",
+
+Podemos adicionar scripts ao arquivo package.json no atributo "scripts".
+Aqui adicionamos dois scripts, "start" e "dev":
+
+    "scripts": {
+        "start": "nodemon",
+        "dev": "nodemon",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+
+Como coloquei apenas "nodemon" ele vai procurar o arquivo "main" dentro
+do package.json. Também poderia ter colocado "nodemon arquivo.js" para
+executar um arquivo específico.
+
+Para recriar a pasta node_modules e executar os scripts acessamos a pasta 
+onde package.json está localizada pelo terminal e então usamos os comandos:
+
+    "npm i" para instalar as dependencias necessárias especificadas
+    no arquivo package.json. Aqui foram instaladas as dependencias do
+    axio e também as dependencias requeridas pelo axio
+
+    "npm start" para executar o script "start". Este é um comando padrao
+    do node
+
+    "npm run dev" para executar o script "dev". O run é necessário pois
+    "dev" não é um comando padrao do node
+
+Posso usar esses scripts customizados para automatizar tarefas de desenvolvimento
+e produção. E podemos usar o && para encadear outros comandos no mesmo script. 
+Ver o exemplo no script "test" acima.

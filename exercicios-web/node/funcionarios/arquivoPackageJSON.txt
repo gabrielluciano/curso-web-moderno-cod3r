@@ -1,0 +1,41 @@
+O arquivo package.json contém as informações sobre o projeto
+Ele também contém as informações sobre modulos externos utilizados
+
+Com o comando "npm init" criamos package.json e podemos configurar
+cada um dos parâmetros que quisermos, como nome, versão, repositorio...
+
+Também podemos usar o comando "npm init -y" para responder sim a todas
+as perguntas e criar o arquivo direto.
+
+Em um projeto primeiro criamos o arquivo package.json com o comando anterior
+e então instalamos os modulos.
+
+Para instalar um módulo externo e salvá-lo no arquivo package.json usamos
+o comando "npm i --save nome_da_dependencia"
+
+Para instalar com uma versao especifica usamos:
+"npm i --save nome_da_dependencia@version_number -E": 
+ex.: npm i --save axios@0.17.1 -E
+
+O package JSON então recebe então o parametro dependencies. Ex.:
+
+"dependencies": {
+    "axios": "0.19.2"
+  }
+
+Podemos setar o numero da versao de tres formas
+"0.19.2"  - a versão não poderá ser atualizada
+"^0.19.2" - só poderá mudar o "minor" que é o numero do meio
+"~0.19.2" - só poderá mudar o "fix" que é o número da direita
+
+Também podemos usar --save-dev ao inves de --save se a dependencia
+só for necessária para desenvolvimento. Nesse caso teremos o parametro:
+
+"devDependencies: {
+    "axios": "0.19.2
+}
+
+Quando instalamos uma dependencia (modificando o node_modules) também é 
+criado o arquivo package-lock.json
+Esse arquivo deve ir para o repositorio. Quando este arquivo está presente
+o node sempre vai pegar as depencias na versao em que foram instaladas.

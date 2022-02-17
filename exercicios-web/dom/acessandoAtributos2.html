@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Acessando Atributos #02</title>
+    <link rel='stylesheet' href='css/estilo.css'>
+</head>
+
+<body class='conteudo exercicio'>
+    <div>
+        <label for="compras">Compras</label>
+        <ul id="compras" destino='escritório' data-urgencia="5" data-blabla="opa">
+            <li>Café</li>
+            <li>Água</li>
+            <li>Copo Descartável</li>
+        </ul>
+    </div>
+    <script>
+        const lista = document.querySelector('div ul[destino="escritório"]')
+        console.log('Elemento "ul".................')
+        console.log('childNodes', lista.childNodes)
+        console.log('destino', lista.destino)
+        console.log('getAttribute', lista.getAttribute('destino'))
+        console.log('hasAttribute', lista.hasAttribute('destino'))
+        lista.setAttribute('destino', 'empresa') // altera um atributo ou seta um novo atributo
+        lista.setAttribute('status', 'aberto')
+        lista.removeAttribute('destino')
+
+        // Atributos começados com "data-" Ex.: data-urgencia="5" são tratados
+        // ligeiramente diferentes dos que não tem esse começo
+        // porem não é tão usado
+        console.log(lista.dataset) // retorna um objeto com os atributos data (note que o prefixo "data-" não vem junto)
+        console.log(lista.dataset.urgencia) // sem o prefixo
+        lista.dataset.urgencia = 4
+        // lista.data-urgencia -> daria erro
+        console.log(lista.getAttribute('data-urgencia'))
+
+        // cuidado - nem todos os atributos definidos do html podem ser acessados de todas as formas
+        const label = document.querySelector('label')
+        console.log(label.for) // undefined
+        console.log(label.htmlFor) // funciona
+        console.log(label.getAttribute('for')) // funciona
+    </script>
+</body>
+
+</html>

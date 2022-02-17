@@ -1,0 +1,19 @@
+// Ambos verdadeiros
+v e v -> v
+v e f -> f
+f e ? -> f
+
+// Um deles verdadeiro
+v ou ? -> v
+v ou f -> v
+f ou f -> f
+
+// Se forem diferentes
+v xor v -> f
+v xor f -> v
+f xor v -> v
+f xor f -> f
+
+// Se forem iguais
+!v -> f
+!f -> v

@@ -1,0 +1,97 @@
+<!-- outras parametros da tag video 
+    autoplay
+
+
+-->
+
+<video id="meuVideo" width="800" height="450" controls controlsList="nodownload">
+    <source src="http://files.cod3r.com.br/curso-web/video.mp4" type="video/mp4">
+        Seu browser não suporta vídeos.
+</video>
+
+<div wm-progresso="meuVideo" class="progresso">
+    <div></div>
+</div>
+
+<div>
+    <button wm-play="meuVideo">Play</button>
+    <button wm-pause="meuVideo">Pause</button>
+</div>
+
+<style>
+    .progresso {
+        height: 20px;
+        width: 500px;
+        border: 1px solid #444;
+        margin: 20px;
+    }
+
+    .progresso div {
+        background-color: red;
+        color: #fff;
+        height: 100%;
+        text-align: right;
+        width: 0%;
+    }
+</style>
+
+<!--<script>    Meu Codigo
+    const pauseButton = document.querySelector('[wm-pause]')
+    const playButton = document.querySelector('[wm-play]')
+    let duration = 0
+    let actualTime = 0
+
+    function getVideoById(id) {
+        const videoId = id
+        return [document.querySelector(`video#${id}`), id]
+    }
+
+    const [video, videoId] = getVideoById('meuVideo')
+
+    pauseButton.onclick = function() {
+        video.pause()
+    }
+
+    playButton.onclick = function() {
+        video.play()
+        progressBar(duration, actualTime)
+    }
+
+    video.onloadedmetadata = () => {
+        duration = Math.round(video.duration)
+        actualTime = Math.round(video.currentTime)
+    }
+
+    function progressBar(duration, currentTime) {
+
+        if (!video.paused && currentTime < duration) {
+            setTimeout(() => {
+                const wmprog = document.querySelector('[wm-progresso] > div')
+                progresso = Math.round((currentTime/duration)*100)
+                console.log(progresso)
+                wmprog.style.width = progresso + '%'
+                progressBar(duration, video.currentTime)
+            }, 10)
+        }
+
+    }
+</script>-->
+
+<script>
+    function configurarVideo(id) {
+        const video = document.getElementById(id)
+        video.oncontextmenu = () => false   // não consigo abrir menu com botao direito
+
+        document.querySelector(`[wm-play=${id}]`).onclick = e => video.play()
+        document.querySelector(`[wm-pause=${id}]`).onclick = e => video.pause()
+
+        setInterval(() => {
+            const percentual = (video.currentTime / video.duration) * 100
+            const valorDiv = document.querySelector(`[wm-progresso=${id}] > div`)
+            valorDiv.style.width = percentual + '%'
+            valorDiv.innerHTML = `${percentual.toFixed(1)}`
+        }, 500)
+    }
+
+    configurarVideo('meuVideo')
+</script>

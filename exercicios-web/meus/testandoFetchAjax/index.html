@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="p-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usando Fetch</title>
+    <style>
+        #conteudo {
+            width: 300px;
+            height: 300px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <a id="link" href="injected.html">Clique aqui!</a>
+    <div id="conteudo"></div>
+
+    <script>
+        const link = document.getElementById('link')
+        const conteudo = document.getElementById('conteudo')
+        link.onclick = (e) => {
+            e.preventDefault()
+            fetch(link.getAttribute('href'))    //Faz uma requisição para a url do href do link
+                .then(resp => resp.text())  // Quanado obtém-se a resposta, nós pegamos o texto do html
+                .then(html => conteudo.innerHTML = html) // E adicionamos esse texto dentro do conteudo
+
+            // Adiciona o novo script que irá interagir com o elemento adicionado
+            const newScript = document.createElement('script')
+            newScript.setAttribute('src', '/script.js')
+            document.body.appendChild(newScript)
+        }
+    </script>
+</body>
+</html>

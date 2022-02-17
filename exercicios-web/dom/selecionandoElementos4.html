@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Selecionar Elementos #04</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+
+<body class="conteudo exercicio">
+    <div>
+        <p>Início</p>
+    </div>
+    <div>
+        <ul>
+            <li>Pedro</li>
+            <li>Ana</li>
+            <li>Bia</li>
+        </ul>
+    </div>
+    <div>
+        <p>Fim</p>
+    </div>
+    <script>
+        function log() {
+            console.log(this)
+        }
+
+        HTMLCollection.prototype.log = log
+        HTMLElement.prototype.log = log
+        NodeList.prototype.log = log
+        Node.prototype.log = log
+
+        const lista = document.querySelector('div ul')
+        lista.parentNode.log()
+        lista.childNodes.log()
+
+        const primeiro = lista.firstChild
+        primeiro.log()  // texto
+        primeiro.nextSibling.log()  //segundo elemento apos o texto
+
+        const ultimo = lista.lastChild
+        ultimo.log()    // texto
+        ultimo.previousSibling.log() // elemento antes do texto
+
+        lista.children.log() // textos nao vem (HTMLColletionc)
+        lista.firstElementChild.log() // primeiro elemento (tag)
+        lista.lastElementChild.log()    // ultimo elemento
+        lista.parentNode.previousElementSibling.log()
+        lista.parentNode.nextElementSibling.log()
+
+        document.querySelectorAll('div ul li').log()    // ideal, muito mais simples
+    </script>
+</body>
+
+</html>
