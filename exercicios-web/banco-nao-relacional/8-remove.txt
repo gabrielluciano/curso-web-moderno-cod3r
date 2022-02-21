@@ -1,0 +1,11 @@
+# O método remove remove um ou mais documentos a partir do filtro especificado
+db.estados.remove({ sigla: "AC" })
+
+# Removendo estados que possuem população
+# O segundo parâmetro determina o número de registros que serão removidos. Nesse caso, apenas um registro.
+db.estados.remove({ populacao: {$exists: true} }, 1)
+
+db.estados.update({ sigla: "RJ" }, { $set: { populacao: 16720000 } })
+
+# Removendo estados cuja populacao é menor que 20 milhões de habitantes
+db.estados.remove({ populacao: { $lt: 20000000 } })

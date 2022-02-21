@@ -1,0 +1,37 @@
+# Aggregate - método para criar o pipeline de agregação: permite a utilização de diversos estágios para realizar consultas complexas
+
+# O project é parecido com o filtro de atributos do find. Nele você pode escolher os atributos que serão mostrados.
+db.estados.aggregate([
+    { $project: { nome: 1, "cidades.nome": 1, _id: 0 } }
+])
+
+# Somando a população de todas as cidades de cada estado
+# O uso do cifrão($) em "$cidades.populacao" é necessário pois nesse caso ela não é uma chave, e sim, um valor (está do lado direito)
+db.estados.aggregate([
+    { $project: { populacao: { $sum: "$cidades.populacao" } } }
+])
+
+# Observe no exemplo acima que o atrito populacao é um atributo criado, tanto que posso mudar seu nome e continuará sendo exibida a soma.
+db.estados.aggregate([
+    { $project: { umNomeQualquer: { $sum: "$cidades.populacao" } } }
+])
+
+# Passando outros atributos junto no project
+db.estados.aggregate([
+    { $project: { populacao: { $sum: "$cidades.populacao" }, sigla: 1, _id: 0 } }
+])
+
+# Utilizando novos passos no pipeline de agregação. O resultado passado para o próximo passo do pipeline é sempre o resultado do passo anterior (e não a coleção inicial)
+# Nesse caso soma-se as populacoes de todos os estados. 
+# Preciso usar o _id: null para informar ao mongo que não quero agrupar por nenhum parâmetro, assim ele vai criar um único grupo
+db.estados.aggregate([
+    { $project: { populacao: { $sum: "$cidades.populacao" }, sigla: 1, _id: 0 } },
+    { $group: { _id: null, populacaoTotal: {$sum: "$populacao"} } }
+])
+
+# Removendo o _id: null como novo project
+db.estados.aggregate([
+    { $project: { populacao: { $sum: "$cidades.populacao" }, sigla: 1, _id: 0 } },
+    { $group: { _id: null, populacaoTotal: {$sum: "$populacao"} } },
+    { $project: { populacaoTotal: 1, _id: 0 } }
+])

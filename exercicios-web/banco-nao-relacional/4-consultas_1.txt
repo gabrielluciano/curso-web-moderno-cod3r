@@ -1,0 +1,44 @@
+# Busca todos os dados de uma coleção
+db.estados.find()
+db.estados.find().pretty()
+
+# Busca um único registro - Se não passar nenhum parâmetro será retornado o primeiro item da lista
+db.estados.findOne()
+
+# Passando filtros para o findOne
+db.estados.findOne({ sigla: "RJ" })
+
+# Neste caso o find retorna o mesmo resultado do que o comando acima pois só um estado tem a sigla "RJ"
+db.estados.find({ sigla: "RJ" })
+
+# Operador OU
+db.estados.find({ $or: [ { sigla: "RJ" } , { sigla: "AC" } ] }).pretty()
+
+# Operador AND - Nesse caso não irá retornar nenhum estado
+db.estados.find({ $and: [ { sigla: "RJ" } , { sigla: "AC" } ] }).pretty()
+
+# Consultanado apenas os estados que possuem o atributo populacao
+db.estados.find({ populacao: { $exists: true } }).pretty()
+
+# Método skip: pula um ou mais registros a partir do parâmetro numérico recebido
+# O exemplo abaixo exibe todos os registros a partir do segundo
+db.estados.find().skip(1)
+
+# Método limit: limita o número de resultados retornados. Pode ser encadeado com outros métodos como o skip
+db.estados.find().skip(1).limit(2).pretty()
+
+# Count: mostra quantos registros uma coleção possui
+db.estados.count()
+
+# Posso utilizar em conjunto os métodos skip, limit e count para gerar uma paginação!
+
+# Trazendo apenas os atributos desejados
+# O primeiro parâmetro do find representa o filtro, assim como nos exemplos anteriores
+# No segundo parâmetro posso escolher os atributos que quero trazer, atribuindo o valor 1 aos parâmetros desejados
+db.estados.find({sigla: "SP"}, { nome: 1, sigla: 1 })
+
+# Por padrão o ID vem apesar do filtro, mas ele pode ser removido atribuindo a ele o valor zero no filtro de atributos
+db.estados.find({sigla: "SP"}, { nome: 1, sigla: 1, _id: 0 })
+
+# Trazendo apenas o nome das cidades de são paulo
+db.estados.find({ sigla: "SP" }, { "cidades.nome": 1, _id: 0 })

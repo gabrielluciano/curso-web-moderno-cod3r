@@ -1,0 +1,27 @@
+# Objetivo pesquisar dentro dos estados qual estado possui a cidade "Sorocaba" e então extrair apenas o id dessa cidade
+
+# Match: filtra as coleções a partir de um atributo
+db.estados.aggregate([
+    { $match: { "cidades.nome": "Sorocaba" } },
+]).pretty()
+
+# Unwind: vai criar vários docs do estado de são paulo, porém cada um vai conter uma cidade diferente no atributo cidade.
+db.estados.aggregate([
+    { $match: { "cidades.nome": "Sorocaba" } },
+    { $unwind: "$cidades" }
+]).pretty()
+
+# Agora separo novamente o estado que contém a cidade com nome Sorocaba
+db.estados.aggregate([
+    { $match: { "cidades.nome": "Sorocaba" } },
+    { $unwind: "$cidades" },
+    { $match: { "cidades.nome": "Sorocaba" } },
+]).pretty()
+
+# Por fim uso o project para extrair apenas o id
+db.estados.aggregate([
+    { $match: { "cidades.nome": "Sorocaba" } },
+    { $unwind: "$cidades" },
+    { $match: { "cidades.nome": "Sorocaba" } },
+    { $project: { _id: "$cidades._id" }}
+]).pretty()

@@ -1,0 +1,29 @@
+# Posso inserir um dado em uma coleção não existente e a coleção será criada automaticamente
+# Comando insert - insere um dado em formato JSON na coleção. O formato passado também pode ser um objeto javascript
+db.estados.insert({ nome: "Acre", sigla: "AC", regiao: "Norte" })
+show collections # Vai mostrar a coleçao estados
+
+# O comando save também insere um novo dado assim como o insert, porém ele também serve para alterar um dado na coleção
+# O comando abaixo vai funcionar mesmo inserindo o campo população, pois o banco NoSQL não tem schema
+db.estados.insert({ nome: "Alagoas", sigla: "AL", regiao: "Nordeste", populacao: 3322000 })
+
+# Forma de mostrar os dados em uma coleção
+db.estados.find()
+
+# Usando o método pretty() o json é mostrado com identação
+db.estados.find().pretty()
+
+# Posso usar a identação no cli quebrando a linha. Também posso fazer uma coluna receber um objeto ou array de objetos
+db.estados.insert({
+    nome: "Rio de Janeiro",
+    sigla: "RJ",
+    regiao: "Sudeste",
+    cidades: [{ 
+        nome: "Niterói",
+        area: 133.9,
+        populacao: 487562,
+    }]
+})
+
+# Comando de help
+db.help()

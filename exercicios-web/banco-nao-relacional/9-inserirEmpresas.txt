@@ -1,0 +1,24 @@
+# Criando a coleção empresas, criando uma nova empresa e associando esta a um estado a partir do id do estado de são paulo
+db.empresas.insert({
+    nome: "Bradesco",
+    estadoId: ObjectId("6211384347cdd92b6d8c0756")
+})
+
+# Associando outra emprsa ao Id de uma cidade de são paulo (sorocaba)
+db.empresas.insert({
+    nome: "Vale",
+    cidadeId: ObjectId("6211384347cdd92b6d8c0755"),
+})
+
+
+db.estados.insert({
+    nome: "Rio de Janeiro",
+    sigla: "RJ",
+    regiao: "Sudeste",
+    cidades: [{ 
+        _id: ObjectId(),
+        nome: "Niterói",
+        area: 133.9,
+        populacao: 487562,
+    }]
+})

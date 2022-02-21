@@ -1,0 +1,53 @@
+# Consulta lookup - permite, a partir da consulta de uma coleção, buscar dados de outra coleção que tenha alguma associação com os documentos procurados
+# Neste caso estou buscando a empresa Bradesco e a partir do lookup e dos id, consigo agregar o estado relacionado à empresa na pesquisa.
+
+db.empresas.aggregate([
+    {$match: {nome: "Bradesco" }},
+    {$lookup: {
+        from: "estados",
+        localField: "estadoId",
+        foreignField: "_id",
+        as: "estado"
+    }},
+]).pretty()
+
+# Posso utilizar o $uwind para remover o array já que a consulta retorna um array com um único estado
+db.empresas.aggregate([
+    {$match: {nome: "Bradesco" }},
+    {$lookup: {
+        from: "estados",
+        localField: "estadoId",
+        foreignField: "_id",
+        as: "estado"
+    }},
+    {$unwind: "$estado" }
+]).pretty()
+
+# Já para consultar a cidade relacionada a empresa, embora o estado correto seja retornado, ele será retornado contendo todas as suas cidades.
+db.empresas.aggregate([
+    {$match: {nome: "Vale"}},
+    {$lookup: {
+        from: "estados",
+        localField: "cidadeId",
+        foreignField: "cidades._id",
+        as: "estado"
+    }},
+    {$unwind: "$estado"},
+]).pretty()
+
+# Pode-se utilizar o passo $addFields para criar um campo que diz qual a cidade correta a partir do atributo $cmp
+# $cmp - compara dois atributos e retorna "0" em caso de igualdade e "-1" ou "1" caso sejam diferentes
+# Por fim filtram-se as cidades a partir do atributo "mesmaCidade"
+db.empresas.aggregate([
+    {$match: {nome: "Vale"}},
+    {$lookup: {
+        from: "estados",
+        localField: "cidadeId",
+        foreignField: "cidades._id",
+        as: "estado"
+    }},
+    {$unwind: "$estado"},
+    {$unwind: "$estado.cidades"},
+    {$addFields: { mesmaCidade: {$cmp: ["$estado.cidades._id", "$cidadeId"]} }},
+    {$match: { mesmaCidade: 0 }}
+]).pretty()

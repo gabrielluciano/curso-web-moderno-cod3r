@@ -1,0 +1,13 @@
+# Update serve para fazer update dos dados de um ou mais documentos. Se o atributo não existir ele será criado. O atributo $set DEVE ser utilizado ou os outros atributos serão removidos durante a atualização.
+# O primeiro parâmetro deve ser o filtro e os atributos que serão atualizados ou inseridos
+db.estados.update({ sigla: "SP" }, { $set: {populacao: 45340000 } })
+
+# Posso usar o $set inclusives com arrays
+# Nesse caso todas as cidades são substituidas pelo array passado. Como Alagoas não tem nenhum estado ainda, logo isso não é problema nesse caso
+db.estados.update({ sigla: "AL" }, {$set: { cidades: [ {nome: "Sergipe"} ] }} )
+
+# $push - adiciona um novo objeto a uma lista
+db.estados.update(
+    { sigla: "SP" },  
+    { $push: { cidades: { nome: "Santos", populacao: 433966 } }}
+)

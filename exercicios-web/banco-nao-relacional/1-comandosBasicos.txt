@@ -1,0 +1,21 @@
+# Mostra os bancos de dados criados
+show dbs
+
+# Seleciona um banco de dados - se o banco não existir ele será criado, porém apenas quando dados forem adicionados ao banco
+use wm
+
+# Criar uma coleção - equivalente as tabelas no mysql
+db.createCollection('estados')
+
+# Exibe as coleções criadas
+show collections
+
+# O mongodb e outros bancos não relacionais são case sensitive, diferente dos bancos SQL que normalmente são case insesitive
+db.createCollection('Estados')
+
+# Deleta uma coleção - equivalente ao drop table do MySQL
+db.Estados.drop()
+
+# Se eu excluir todas as coleções de um banco, o banco será automaticamente excluido caso novas coleções não sejam criadas
+db.estados.drop()
+show dbs # Resultado: não vai exibir o banco wm criado acima
