@@ -14,7 +14,6 @@ Este repositório contém os arquivos desenvolvidos por mim durante as aulas do 
     - ReactJS
     - NextJS
     - VueJS
-    - AngularJS
     - Express
     - TailwindCSS
     - jQuery
