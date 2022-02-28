@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Componente</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <script src="/js/vue.min.js"></script>
+</head>
+<body class="exercicio">
+    <div id="app">
+        <contador tipo="Pontos"></contador>
+        <contador tipo="Gols"></contador>
+    </div>
+    <script>
+        Vue.component('contador', {
+            props: ['tipo'],
+            data: function() {
+                return {
+                    contagem: 0,
+                }
+            },
+            template: `
+                <div>
+                    Contador de {{tipo}}
+                    <div>{{ contagem }}</div>
+                    <button @click="contagem++">+1</button>
+                    <button @click="decrementaContagemEmDois">-2</button>
+                </div>
+            `,
+            methods: {
+                decrementaContagemEmDois() {
+                    this.contagem -= 2
+                }
+            }
+        })
+
+        new Vue({
+            el: "#app",
+        })
+    </script>
+</body>
+</html>

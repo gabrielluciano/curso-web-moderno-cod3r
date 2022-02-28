@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Binding</title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <script src="/js/vue.min.js"></script>
+</head>
+<body class="exercicio">
+    <div id="app">
+        <p>{{ link }}</p>
+        <p><a href="{{ link }}">Youtube</a></p>
+        <!-- Diretiva v-bind: Informa que o conteúdo do atributo tem que ser interpolado -->
+        <p><a v-bind:href="link">Youtube certo</a></p>
+        <p><a :href="link">Youtube também certo</a></p>
+        <!-- Diretiva v-model: neste caso v-model funciona como o value, mas associa o nome ao atributo nome de data -->
+        <!-- Neste caso two way databind é usado -->
+        <p>
+            <input type="text" v-model="nome"><br>
+            <span>{{ nome }}</span>
+        </p>
+        <!-- Outra forma de alterar o input é usando o atributo "v-bind" ou ":" -->
+        <!-- Neste caso a alteração do input não altera a variavel da data -->
+        <p>
+            <input type="text" :value="nome2"><br>
+            <span>{{ nome2 }}</span>
+        </p>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                nome: "Maria",
+                nome2: "João",
+                link: "https://youtube.com"
+            },
+            // watch: Executa uma função quando um atributo de data é modificado
+            // A função deve ter o mesmo nome do atributo e recebe o novo valor como parâmetro
+            watch: {
+                nome(novoValor) {
+                    console.log(novoValor.toUpperCase())
+                }
+            }
+        })
+    </script>
+</body>
+</html>
