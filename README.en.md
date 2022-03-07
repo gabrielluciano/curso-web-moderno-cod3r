@@ -14,6 +14,7 @@ This repository contains the files developed by me during the [Modern Web Course
     - ReactJS
     - NextJS
     - VueJS
+    - Angular
     - Express
     - TailwindCSS
     - jQuery
